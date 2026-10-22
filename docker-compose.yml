@@ -1,0 +1,23 @@
+# Step 2: the app with document search. SearXNG (web search) is added in step 3.
+services:
+  app:
+    build: .
+    container_name: local-ai-helper
+    restart: unless-stopped
+    # Published on loopback only: nothing else on your network can reach the UI.
+    ports:
+      - "127.0.0.1:${APP_PORT:-7860}:7860"
+    environment:
+      # Ollama runs natively on the Mac (Docker on Apple Silicon cannot use the GPU).
+      OLLAMA_BASE_URL: ${OLLAMA_BASE_URL:-http://host.docker.internal:11434}
+      DEFAULT_MODEL: ${DEFAULT_MODEL:-qwen3:8b}
+      SYSTEM_PROMPT: ${SYSTEM_PROMPT:-You are a helpful local assistant. Answer concisely and say so when you are unsure.}
+      EMBED_MODEL: ${EMBED_MODEL:-qwen3-embedding:0.6b}
+      NUM_CTX: ${NUM_CTX:-8192}
+      TOP_K: ${TOP_K:-5}
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    volumes:
+      - ./data:/data
+      # Your documents, mounted read-only: the app can search them but never change them.
+      - ${DOCS_FOLDER:-./docs}:/docs:ro

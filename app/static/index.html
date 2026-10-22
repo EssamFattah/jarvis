@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Local AI Helper</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+  <div class="title">Local AI Helper</div>
+  <div class="spacer"></div>
+  <label class="toggle" title="Answer from your documents folder, with sources">
+    <input type="checkbox" id="docs"> My documents
+  </label>
+  <label class="toggle" title="Show the model's reasoning (Qwen3 and other thinking models only)">
+    <input type="checkbox" id="think"> Thinking
+  </label>
+  <select id="model" aria-label="Model"></select>
+  <button id="new" title="Start a new chat">New chat</button>
+</header>
+<div id="banner" hidden></div>
+<main id="log" aria-live="polite"></main>
+<form id="form">
+  <textarea id="input" rows="1" placeholder="Ask anything. Enter to send, Shift+Enter for a new line." autofocus></textarea>
+  <button id="send" type="submit">Send</button>
+</form>
+<footer>
+  <span id="status"></span>
+  <span class="spacer"></span>
+  <span id="docstatus"></span>
+  <button id="reindex" class="small" title="Re-scan your documents folder for new or changed files">Reindex</button>
+</footer>
+<script src="vendor/marked.umd.js"></script>
+<script src="vendor/purify.min.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
